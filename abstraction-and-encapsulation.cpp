@@ -7,6 +7,7 @@ using namespace std;
 class Bank{
 	private:
 		double balance;
+		
 	protected:
 		Bank(){
 			balance=0;
@@ -35,10 +36,12 @@ class savingsAccount:public Bank{
 		void withdraw(double amount)override{
 			if(amount>0&&getBalance()-amount>=1000){
 				setBalance(getBalance()-amount);
+				
 			}else if(amount>0&&getBalance()<amount){
   				  cout<<"Cannot withdraw. Insufficient balance.\n\n";
+  				  
 			}else if(amount>0){
-				cout<<"\nMinimum balance should remain Php 1000.\n\n";
+				cout<<"Minimum balance should remain Php 1000.\n\n";
 			}
 		}
 
@@ -86,7 +89,7 @@ void menu(){
 	cout<<"1 - Savings Account\n";
 	cout<<"2 - Current Account\n";
 	cout<<"3 - Exit\n";
-	cout<<"\nSelect your choice: ";
+	cout<<"\nEnter your choice: ";
 	
 		
 	while(condition){
@@ -95,12 +98,12 @@ void menu(){
 		
 		switch(choice){
 			case'1':
-				cout<<"---Savings Account---"<<endl;
+				cout<<"---Savings Account---"<<endl<<endl;
 				subMenu(s1);
 				break;
 				
 			case'2':
-				cout<<"---Current Account---"<<endl;
+				cout<<"---Current Account---"<<endl<<endl;
 				subMenu(c1);
 				break;
 				
@@ -110,7 +113,7 @@ void menu(){
 				break;
 				
 			default:
-				cout<<"Invalid choice. Please try again.\n";
+				cout<<"Invalid choice. Please try again.\n\n";
 		}
 	}
 }
@@ -119,10 +122,9 @@ void subMenu(Bank& account){
 	char choice;
 	double amount;
 	bool condition=true;
-	
-	cout<<"\nSub Menu\n";
 
 	while(condition){
+		cout<<"Sub Menu\n";
 		cout<<"1 - Deposit\n";
 		cout<<"2 - Withdraw\n";
 		cout<<"3 - Check Balance\n";
@@ -132,7 +134,8 @@ void subMenu(Bank& account){
 		system("cls");
 		switch(choice){
 			case'1':
-				cout<<"Enter amount you want to deposit: ";
+				cout<<"D E P O S I T"<<endl;
+				cout<<"\nEnter amount you want to deposit: ";
 				cin>>amount;
 				while (cin.fail()||amount<0){
 					cout<<"\nInvalid input. Please enter a non-negative number: ";
@@ -140,25 +143,40 @@ void subMenu(Bank& account){
 					cin.ignore(10000,'\n');
 					cin>>amount;
 				}
-				cout<<"\nYou have successfully deposited Php "<<fixed<<setprecision(2)<<amount<<endl<<endl;	
+				while(amount==0){
+					cout<<"\nInvalid Input. You cannot deposit Php. 0.00"<<endl;
+					cout<<"\nEnter amount you want to deposit: ";
+					cin>>amount;
+				}
+				cout<<"\nYou have successfully deposited Php "<<fixed<<setprecision(2)<<amount<<endl;	
+				cout<<"------------------------------------------------------"<<endl<<endl;
 				account.deposit(amount);
 				break;
 				
 			case'2':
-				cout<<"Enter amount you want to withdraw: ";
+				cout<<"W I T H D R A W"<<endl;
+				cout<<"\nEnter amount you want to withdraw: ";
 				cin>>amount;
 				cout<<endl;
 				while (cin.fail()||amount<0){
 					cin.clear();
 					cin.ignore(10000,'\n');
 					cout<<"\nInvalid input. Please enter a non-negative number: ";
-					cin>>amount;
+					cin>>amount;	
 				}
+				while(amount==0){
+				cout<<"\nInvalid Input. You cannot withdraw Php. 0.00"<<endl;
+				cout<<"\nEnter amount you want to withdraw: ";
+				cin>>amount;
+				}
+				cout<<"--------------------------------------------------------"<<endl<<endl;
 				account.withdraw(amount);
 				break;
 				
 			case'3':
-				cout<<"Your Current Balance is Php "<<fixed<<setprecision(2)<<account.getBalance()<<endl<<endl;
+				cout<<"C H E C K  B A L A N C E"<<endl;
+				cout<<"\nYour Current Balance is Php "<<fixed<<setprecision(2)<<account.getBalance()<<endl;
+				cout<<"---------------------------------------------------------"<<endl<<endl;
 				break;
 				
 			case'4':
@@ -176,4 +194,3 @@ void subMenu(Bank& account){
 		}
 	}
 }
-
